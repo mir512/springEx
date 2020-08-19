@@ -47,6 +47,16 @@ public class BoardControllerTests {
 				);
 	}
 	
+	// p 301 pageNum과 amount를 파라미터로 테스트
+	@Test
+	public void testListPaging() throws Exception {
+		log.info(mockMvc.perform(
+				MockMvcRequestBuilders.get("/board/list")
+				.param("pageNum", "2")
+				.param("amount", "50"))
+				.andReturn().getModelAndView().getModelMap());
+	}
+	
 	// p 216 글쓰기 완료 테스트
 	@Test
 	public void testRegister() throws Exception {

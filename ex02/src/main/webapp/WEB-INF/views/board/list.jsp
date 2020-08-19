@@ -20,6 +20,23 @@ $(document).ready(function (){
 	$("#regBtn").on("click", function(){
 		self.location = "/board/register";
 	});
+	
+	// p 311 페이지 번호 클릭하면 처리하는 부분
+	var actionForm = $("#actionForm");
+	$(".paginate_button a").on("click", function(e){
+		e.preventDefault();
+		console.log('click');
+		actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+		actionForm.submit();
+	});
+	
+	// p 315 게시물 조회를 위한 이벤트 처리 추가
+	$(".move").on("click", function(e){
+		e.preventDefault();
+		actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href")+"'>");
+		actionForm.attr("action", "/board/get");
+		actionForm.submit();
+	});
 });
 </script>
 </head>
@@ -43,7 +60,7 @@ $(document).ready(function (){
 			<c:forEach items="${list}" var="board">
 				<tr>
 					<td><c:out value="${board.bno}" /></td>
-					<td><a href="/board/get?bno=${board.bno}"><c:out value="${board.title}" /></a></td>
+					<td><a class='move' href='<c:out value="${board.bno}" />'><c:out value="${board.title}" /></a></td>
 					<td><c:out value="${board.writer}" /></td>
 					<td><fmt:formatDate pattern="yyyy-MM-dd"
 							value="${board.regdate}" /></td>
@@ -53,5 +70,22 @@ $(document).ready(function (){
 			</c:forEach>
 		</tbody>
 	</table>
+	<div>
+	  <ul>
+	    <c:if test="${pageMaker.prev}">
+	      <li class="paginate_button"><a href="${pageMaker.startPage-1}">Previous</a></li>
+	    </c:if>
+	    <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+	      <li class="paginate_button" style="${pageMaker.cri.pageNum == num? 'color:lightblue':''}"><a href="${num}">${num}</a></li>
+	    </c:forEach>
+	    <c:if test="${pageMaker.next}">
+	      <li class="paginate_button"><a href="${pageMaker.endPage+1}">Next</a></li>
+	    </c:if>
+	  </ul>
+	</div>
+	<form id="actionForm" action="/board/list" method="get">
+	  <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+	  <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+	</form>
 </body>
 </html>
