@@ -75,10 +75,15 @@ public class BoardController {
 		if(service.modify(board)) {
 			rttr.addFlashAttribute("result", "success");
 		}
+		/* p 350 UriComponentsBuilder 사용 
 		// p 319 페이징 처리 위해 추가. 글 수정 후 원래 보던 페이지 번호 다시 뜨도록 
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
-		return "redirect:/board/list";
+		// p 346 검색 처리
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		*/
+		return "redirect:/board/list" + cri.getListLink();
 	}
 	
 	// p 220
@@ -89,9 +94,14 @@ public class BoardController {
 		if(service.remove(bno)) {
 			rttr.addFlashAttribute("result", "success");
 		}
+		/* p 350 UriComponentsBuilder 사용 
 		// p 319 페이징 처리 위해 추가. 글 삭제 후 원래 보던 페이지 번호 다시 뜨도록
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
-		return "redirect:/board/list";
+		// p 346 검색 처리
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		*/
+		return "redirect:/board/list" + cri.getListLink();
 	}
 }

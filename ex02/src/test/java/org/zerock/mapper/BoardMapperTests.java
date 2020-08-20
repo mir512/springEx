@@ -85,5 +85,18 @@ public class BoardMapperTests {
 		int count = mapper.update(board);
 		log.info("UPDATE COUNT: " + count);
 	}
+	
+	// p 336 검색기능 SQL 수정 후 테스트
+	@Test
+	public void testSearch() {
+		Criteria cri = new Criteria();
+		// Title+Content '새로' 라는 단어가 들어가는 글 검색
+		cri.setKeyword("새로");
+		cri.setType("TC");
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		list.forEach(board -> log.info(board));
+	}
 
 }

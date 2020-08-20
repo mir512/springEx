@@ -15,6 +15,8 @@
 <!-- p 319 페이징 처리 위해 추가 -->
 <input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum}"/>'>
 <input type="hidden" name="amount" value='<c:out value="${cri.amount}"/>'>
+<input type="hidden" name="type" value='<c:out value="${cri.type}" />'>
+<input type="hidden" name="keyword" value='<c:out value="${cri.keyword}" />'>
   bno : <input type="text" name="bno" value="${board.bno}" readonly><br>
   Title : <input type="text" name='title' value='<c:out value="${board.title}" />' ><br><br>
   Content : <textarea rows="3" name='content' ><c:out value="${board.content}" /></textarea><br>
@@ -43,11 +45,16 @@ $(document).ready(function(){
 			// p 321 페이징 처리 위해 추가. 수정/삭제를 취소하고 다시 목록으로 이동하기
 			var pageNumTag = $("input[name='pageNum']").clone();
 			var amountTag = $("input[name='amountTag']").clone();
+			// p 347 검색 처리
+			var typeTag = $("input[name='type']").clone();
+			var keywordTag = $("input[name='keyword']").clone();
 			
 			formObj.empty();
 			// 필요한 거만 따로 저장해놓고 empty 한 후에 저장해둔 것 다시 추가.
 			formObj.append(pageNumTag);
 			formObj.append(amountTag);
+			formObj.append(typeTag);
+			formObj.append(keywordTag);
 		}
 		formObj.submit();
 	});
